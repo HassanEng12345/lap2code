@@ -12,7 +12,7 @@ services:
               target: /code
         command: ["http-server"]
     api:
-        container_name: debug_dev_api2
+        container_name: debug_dev_api
         ports:
             - 3000:3000
         environment:
