@@ -20,10 +20,10 @@ module.exports = class Post {
         });
     }
 
-    static findByTitle() {
+    static findByTitle(title) {
         return new Promise(async (resolve, reject) => {
             try {
-                const postData = await db.query(`SELECT title FROM posts WHERE title = $1;`, [this.title]);
+                const postData = await db.query(`SELECT * FROM posts WHERE title = $1;`, [title]);
                 const post = new Post(postData.rows[0]);
                 resolve(post);
             } catch (error) {

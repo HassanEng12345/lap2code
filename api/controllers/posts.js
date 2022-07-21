@@ -20,9 +20,11 @@ async function create(req, res) {
 
 async function show(req, res) {
     try {
-        const post = Post.findByTitle;
-        res.status;
-    } catch (error) {}
+        const post = Post.findByTitle(req.body.title);
+        res.status(200).json(post);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 }
 
-module.exports = { index, create };
+module.exports = { index, create, show };
