@@ -12,11 +12,17 @@ async function index(req, res) {
 async function create(req, res) {
     try {
         const post = await Post.create(req.body);
-        console.log(post);
         res.status(201).json(post);
     } catch (error) {
         res.status(500).json(error);
     }
+}
+
+async function show(req, res) {
+    try {
+        const post = Post.findByTitle;
+        res.status;
+    } catch (error) {}
 }
 
 module.exports = { index, create };

@@ -20,6 +20,18 @@ module.exports = class Post {
         });
     }
 
+    static findByTitle() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const postData = await db.query(`SELECT title FROM posts WHERE title = $1;`, [this.title]);
+                const post = new Post(postData.rows[0]);
+                resolve(post);
+            } catch (error) {
+                reject("Post not found");
+            }
+        });
+    }
+
     static create(postData) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -33,22 +45,6 @@ module.exports = class Post {
                 resolve(newPost);
             } catch (error) {
                 reject("Post could not be created");
-            }
-        });
-    }
-
-    async destroy() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const result = await db.query("DESTROY FROM posts WHERE id = $1 RETURNING author_id;", [this.id]);
-                const author = await Post.findById(result.rows[0].author_id);
-                const books = await author.books;
-                if (!books.length) {
-                    await author.destroy();
-                }
-                resolve("Book was deleted");
-            } catch (err) {
-                reject("Book could not be deleted");
             }
         });
     }
